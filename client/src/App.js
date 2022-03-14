@@ -32,7 +32,9 @@ function App() {
     //   scale: 0.8,
     // });
     // NEW MODEL
-    const net = await facemesh.load(facemesh.SupportedPackages.mediapipeFacemesh);
+    const net = await facemesh.load(
+      facemesh.SupportedPackages.mediapipeFacemesh
+    );
     setInterval(() => {
       detect(net);
     }, 10);
@@ -61,50 +63,62 @@ function App() {
       // OLD MODEL
       //       const face = await net.estimateFaces(video);
       // NEW MODEL
-      const face = await net.estimateFaces({input:video});
+      const face = await net.estimateFaces({ input: video });
       console.log(face);
 
       // Get canvas context
       const ctx = canvasRef.current.getContext("2d");
-      requestAnimationFrame(()=>{drawMesh(face, ctx)});
+      requestAnimationFrame(() => {
+        drawMesh(face, ctx);
+      });
     }
   };
 
-  useEffect(()=>{runFacemesh()}, []);
+  useEffect(() => {
+    runFacemesh();
+  }, []);
 
   return (
     <div className="App">
-      <header className="App-header">
-        <Webcam
-          ref={webcamRef}
-          style={{
-            position: "absolute",
-            marginLeft: "auto",
-            marginRight: "auto",
-            left: 0,
-            right: 0,
-            textAlign: "center",
-            zindex: 9,
-            width: 640,
-            height: 480,
-          }}
-        />
+      <div
+        className="heading"
+        style={{ fontSize: "45px", fontWeight: "bold", marginTop: "40px" }}
+      >
+        Real Time Face detection App
+      </div>
+      <div className="mesh-container">
+        <header className="App-header">
+          <Webcam
+            ref={webcamRef}
+            style={{
+              position: "absolute",
+              marginLeft: "auto",
+              marginRight: "auto",
+              left: 0,
+              right: 0,
+              textAlign: "center",
+              zindex: 9,
+              width: 640,
+              height: 480,
+            }}
+          />
 
-        <canvas
-          ref={canvasRef}
-          style={{
-            position: "absolute",
-            marginLeft: "auto",
-            marginRight: "auto",
-            left: 0,
-            right: 0,
-            textAlign: "center",
-            zindex: 9,
-            width: 640,
-            height: 480,
-          }}
-        />
-      </header>
+          <canvas
+            ref={canvasRef}
+            style={{
+              position: "absolute",
+              marginLeft: "auto",
+              marginRight: "auto",
+              left: 0,
+              right: 0,
+              textAlign: "center",
+              zindex: 9,
+              width: 640,
+              height: 480,
+            }}
+          />
+        </header>
+      </div>
     </div>
   );
 }
